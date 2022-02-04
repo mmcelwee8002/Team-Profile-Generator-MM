@@ -1,0 +1,28 @@
+{
+  "name": "team-profile-generator-mm",
+  "version": "1.0.0",
+  "description": "Profile Generator challenge",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmcelwee8002/Team-Profile-Generator-MM.git"
+  },
+  "author": "Matthew McElwee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmcelwee8002/Team-Profile-Generator-MM/issues"
+  },
+  "homepage": "https://github.com/mmcelwee8002/Team-Profile-Generator-MM#readme",
+  "devDependencies": {
+    "jest": "^27.4.7"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.0"
+  }
+}
