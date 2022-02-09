@@ -1,9 +1,12 @@
-
+const fs = require('fs'); 
 const inquirer = require('inquirer');
+const generatePage = require('./HTML-template')
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
-const Employee = require('./lib/Employee')
-const { writeFile } = require('./utils/generate-site.js');
+const Intern = require('./lib/Intern')
+
+
+let teamArray = []
 const addManager = () => {
     return inquirer.prompt([
         {
@@ -61,20 +64,15 @@ const addManager = () => {
 
     ])
         .then(managerInput => {
-            // const { name, id, email, officeNumber } = managerInput;
-            const manager = new Manager(name, id, email, officeNumber){
-                this.name
+            const { name, id, email, officeNumber } = managerInput;
+            const manager = new Manager(name, id, email, officeNumber)
 
-            }
-
+               
             teamArray.push(manager);
             console.log(manager);
         })
 
 };
-
-
-
 const addEmployee = () => {
     console.log(`
     =================
@@ -172,52 +170,79 @@ const addEmployee = () => {
                 }
             }
         },
+        {
+            type: 'input',
+            name: 'school',
+            message: "Please enter the intern's school",
+            when: (input) => input.role === "Intern",
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log("Please enter the intern's school!")
+                }
+            }
+        },
+        {
+            type: 'confirm',
+            name: 'confirmAddEmployee',
+            message: 'Would you like to add more team members?',
+            default: false
+        }
+
     ])
-        // .then(employeeData => {
-        //     let { name, github, email, idNumber, role, officeNumber } = employeeData
-        //     let employee;
+        .then(employeeData => {
+            // data for employee types 
 
-        //     if ('role === Engineer') {
-        //        class Engineer = new Engineer(name, idNumber, email, github, officeNumber){
-        //             this.name = name;
-        //             this.idNumber = idNumber;
-        //             this.email = email;
-        //             this.github = github;
-        //             this.officeNumber = officeNumber
-        //         }
-        //         console.log(employee)
-        //     } else if (role === 'Intern') {
-        //         employee = new Intern(name, idNumber, email, school, officeNumber)
+            let { name, id, email, role, github, school, confirmAddEmployee } = employeeData;
+            let employee;
 
-        //     }
-        //     teamArray.push(employee);
-        //     if (confirmEmployee) {
-        //         return addEmployee(teamArray);
-        //     } else {
-        //         return teamArray
-        //     }
-        // }
-        //     // })
-        // )
-    }
+            if (role === "Engineer") {
+                employee = new Engineer(name, id, email, github);
+
+                console.log(employee);
+
+            } else if (role === "Intern") {
+                employee = new Intern(name, id, email, school);
+
+                console.log(employee);
+            }
+
+            teamArray.push(employee);
+
+            if (confirmAddEmployee) {
+                return addEmployee(teamArray);
+            } else {
+                return teamArray;
+            }
+        })
+
+};
+
+
 //function to generate HTML
-
-    addManager()
-        .then(addEmployee)
-        .then(teamArray => {
-            return gernerateHTML(teamArray);
-        })
-
-        .then(pageHTML => {
-            return writeFile(pageHTML);
-        })
-        // .then(writeFileResponse => {
-        //     console.log(writeFileResponse);
-        //     return copyFile();
-        // })
-        // .then(copyFileResponse => {
-        //     console.log(copyFileResponse);
-        // })
-        .catch(err => {
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        // if there is an error 
+        if (err) {
             console.log(err);
-        });
+            return;
+            // when the profile has been created 
+        } else {
+            console.log("Your team profile has been successfully created! Please check out the index.html")
+        }
+    })
+}; 
+addManager()
+    .then(addEmployee)
+    .then(teamArray => {
+        return gernerateHTML(teamArray);
+    })
+
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+module.exports = generatePage;
