@@ -1,17 +1,17 @@
-const fs = require('fs'); 
 const inquirer = require('inquirer');
-const generatePage = require('./HTML-template')
-const Manager = require('./lib/Manager')
-const Engineer = require('./lib/Engineer')
-const Intern = require('./lib/Intern')
 
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const generatePage = require('./HTML-template');
+const { writeFile } = require('./generate-site');
 
 let teamArray = []
 const addManager = () => {
     return inquirer.prompt([
         {
             type: 'input',
-            name: 'manager',
+            name: 'name',
             message: 'Who is the manager of the Team? (Required)',
             validate: userInput => {
                 if (userInput) {
@@ -50,7 +50,7 @@ const addManager = () => {
         },
         {
             type: 'input',
-            name: 'idNumber',
+            name: 'id',
             message: 'Enter Managers ID number? (Required)',
             validate: userInput => {
                 if (userInput) {
@@ -64,8 +64,8 @@ const addManager = () => {
 
     ])
         .then(managerInput => {
-            const { name, id, email, officeNumber } = managerInput;
-            const manager = new Manager(name, id, email, officeNumber)
+            const { name, id, email, officeNumber} = managerInput;
+            const manager = new Manager(name, email, id, officeNumber)
 
                
             teamArray.push(manager);
@@ -116,7 +116,7 @@ const addEmployee = () => {
         },
         {
             type: 'input',
-            name: 'idNumber',
+            name: 'id',
             message: 'Enter your employees ID number? (Required)',
             validate: userInput => {
                 if (userInput) {
@@ -127,35 +127,7 @@ const addEmployee = () => {
                 }
             }
         },
-        {
-            type: 'input',
-            name: 'school',
-            message: 'Please enter Intern School? (Required)',
-            when: (input) => input.role === 'Intern',
-            validate: userInput => {
-                if (userInput) {
-                    return true;
-                } else {
-                    console.log('Please enter Intern school!');
-                    return false;
-
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'officeNumber',
-            message: 'Enter your employees Office number? (Required)',
-            validate: userInput => {
-                if (userInput) {
-                    return true;
-                } else {
-                    console.log('Please enter your employees Office number!');
-                    return false;
-                }
-            }
-        },
-
+        
         {
             type: 'input',
             name: 'github',
@@ -194,16 +166,16 @@ const addEmployee = () => {
         .then(employeeData => {
             // data for employee types 
 
-            let { name, id, email, role, github, school, confirmAddEmployee } = employeeData;
+            let {name, role, email, id, github, school, confirmAddEmployee } = employeeData;
             let employee;
 
             if (role === "Engineer") {
-                employee = new Engineer(name, id, email, github);
+                employee = new Engineer(name, id, email, github, role);
 
                 console.log(employee);
 
             } else if (role === "Intern") {
-                employee = new Intern(name, id, email, school);
+                employee = new Intern(name, id, email, role, school);
 
                 console.log(employee);
             }
@@ -219,30 +191,16 @@ const addEmployee = () => {
 
 };
 
-
-//function to generate HTML
-const writeFile = data => {
-    fs.writeFile('./dist/index.html', data, err => {
-        // if there is an error 
-        if (err) {
-            console.log(err);
-            return;
-            // when the profile has been created 
-        } else {
-            console.log("Your team profile has been successfully created! Please check out the index.html")
-        }
-    })
-}; 
 addManager()
     .then(addEmployee)
     .then(teamArray => {
-        return gernerateHTML(teamArray);
+        return generatePage(teamArray);
     })
 
     .then(pageHTML => {
         return writeFile(pageHTML);
     })
+
     .catch(err => {
         console.log(err);
     });
-module.exports = generatePage;
