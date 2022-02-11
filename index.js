@@ -73,7 +73,7 @@ const addManager = () => {
         })
 
 };
-const addEmployee = () => {
+const addEmployee = teamData => {
     console.log(`
     =================
     Adding employees to the team

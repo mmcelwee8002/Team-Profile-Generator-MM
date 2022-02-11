@@ -1,75 +1,65 @@
+//Manager card
 
+// const generateManager = function (manager) {
+const generateManager = function (manager) {
 
-    //Manager card
-
-    // const generateManager = function (manager) {
-        const generateManager = manager => {
-         
-            return `
-
+    return `
     <div class="w3-container w3-deep-orange w3-center">
         <h2>My Team</h2>
     </div>
-
     <div class="w3-row-padding">
-
         <div class="w3-third w3-margin-bottom">
             <ul class="w3-ul w3-border w3-center w3-hover-shadow">
                 <li class="w3-aqua w3-xlarge w3-padding-32">
                
-                    <h2>${this.name}</h2>
+                    <h2>${manager}</h2>
                     <p>Manager</p>
                 </li>
-                <li class="w3-padding-16"><b>ID</b> ${this.id}</li>
-                <li class="w3-padding-16"><b>Email</b> ${this.email}</li>
-                <li class="w3-padding-16"><b>Office Number</b> ${this.officeNumber}</li>
-
-
+                <li class="w3-padding-16"><b>ID</b> ${manager}</li>
+                <li class="w3-padding-16"><b>Email</b> ${manager}</li>
+                <li class="w3-padding-16"><b>Office Number</b> ${manager}</li>
             </ul>
         </div>
         `;
-    }
+}
 
-    //Engineer Card
-    const generateEngineer = function(engineer){
+//Engineer Card
+const generateEngineer = function (engineer) {
+    return `
+                < div class="w3-third w3-margin-bottom" >
+                    <ul class="w3-ul w3-border w3-center w3-hover-shadow">
+                        <li class="w3-aqua w3-xlarge w3-padding-32">
+                        
+                            <h2>${engineer}</h2>
+                            <p>${engineer}</p>
+                        </li>
+                        <li class="w3-padding-16"><b>ID</b> ${engineer}</li>
+                        <li class="w3-padding-16"><b>Email</b> ${engineer}</li>
+                        <li class="w3-padding-16"><b>Github</b> ${engineer}</li>
+                    </ul>
+                </div >
+    `;
 
-        return`
-        < div class="w3-third w3-margin-bottom" >
 
-            <ul class="w3-ul w3-border w3-center w3-hover-shadow">
-                <li class="w3-aqua w3-xlarge w3-padding-32">
-
-                    <h2>${this.name}</h2>
-                    <p>${this.title}</p>
-                </li>
-                <li class="w3-padding-16"><b>ID</b> ${this.id}</li>
-                <li class="w3-padding-16"><b>Email</b> ${this.email}</li>
-                <li class="w3-padding-16"><b>Github</b> ${this.Github}</li>
-
-            </ul>
-        </div >
-`;
-    }
+}
 //Intern Card
 
-    const generateIntern = function(intern){
-    return`
+const generateIntern = function (intern) {
+    return `
         <div class="w3-third w3-margin-bottom">
             <ul class="w3-ul w3-border w3-center w3-hover-shadow">
                 <li class="w3-aqua w3-xlarge w3-padding-32">
-
-                    <h2>${this.name}</h2>
-                    <<p>${this.title}</p>
+                    <h2>${intern}</h2>
+                    <<p>${intern}</p>
                 </li>
-                <li class="w3-padding-16"><b>ID</b> ${this.id}</li>
-                <li class="w3-padding-16"><b>Email</b> ${this.email}</li>
-                <li class="w3-padding-16"><b>School</b> ${this.school}</li>
+                <li class="w3-padding-16"><b>ID</b> ${intern}</li>
+                <li class="w3-padding-16"><b>Email</b> ${intern}</li>
+                <li class="w3-padding-16"><b>School</b> ${intern}</li>
             </ul>
         </div>
-
     </div >
 `;
-    }
+}
 
 
 //push array to page 
@@ -117,15 +107,14 @@ generateHTML = (data) => {
 //final HTML
 
 // const generateTeamPage = function (teamCards){
-   module.exports = templateData => {
+module.exports = templateData => {
 
-    const {manager, engineer, intern} = templateData
+    const { manager, engineer, intern } = templateData
 
-   
-return `
- < !DOCTYPE html >
+
+    return `
+ <!DOCTYPE html >
  <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -134,23 +123,16 @@ return `
 <title>Team Org chart</title>
 </head>
 <body>
-
 <div class="w3-row-padding">
-
         <div class="w3-third w3-margin-bottom">
             <ul class="w3-ul w3-border w3-center w3-hover-shadow">
                 <li class="w3-aqua w3-xlarge w3-padding-32">
-
-            ${generateManager}
-            ${generateEngineer}
-            ${generateIntern}
-
-
+        ${generateManager(manager)}
+        ${generateEngineer(engineer)}
+        ${generateIntern(intern)}
             </ul>
         </div>
-
 </body>
-
 </html>
 `;
 };
