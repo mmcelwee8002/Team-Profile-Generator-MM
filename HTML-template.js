@@ -17,9 +17,9 @@ const generateManager = manager => {
                         <h2>${manager.name}</h2>
                         <p>Manager</p>
                     </li>
-                    <li class="w3-padding-16"><b>ID</b> ${manager.id}</li>
-                    <li class="w3-padding-16"><b>Email</b> ${manager.email}</li>
-                    <li class="w3-padding-16"><b>Office Number</b> ${manager.officeNumber}</li>
+                    <li class="w3-padding-16">ID: ${manager.id}</li>
+                    <li class="w3-padding-16">Email:<a href="mailto:${manager.email}">${manager.email}</a></li>
+                    <li class="w3-padding-16">Office Number: ${manager.officeNumber}</li>
                     </li>
                 </ul>
         
@@ -52,8 +52,8 @@ const generateEngineer = data => {
 
 
                 <li class="w3-padding-16"><b>ID</b> ${id}</li>
-                <li class="w3-padding-16"><b>Email</b> ${email}</li>
-                <li class="w3-padding-16"><b>Github</b> ${github}</li>
+                <li class="w3-padding-16">Email:<a href="mailto:${email}">${email}</a></li>
+                <li class="w3-padding-16">Github:  <a href="github.com/${github}" target="_blank">${github}</a></li>
 
                 </li>
             </ul>
@@ -82,8 +82,8 @@ const generateIntern = data => {
 
 
                 <li class="w3-padding-16"><b>ID</b> ${id}</li>
-                <li class="w3-padding-16"><b>Email</b> ${email}</li>
-                <li class="w3-padding-16"><b>Github</b> ${school}</li>
+                <li class="w3-padding-16">Email:<a href="mailto:${email}">${email}</a></li>
+                <li class="w3-padding-16"><b>School: </b> ${school}</li>
 
                 </li>
             </ul>
@@ -91,7 +91,7 @@ const generateIntern = data => {
             `
             })
 
-        };`
+        }`
 }
 
 
@@ -163,8 +163,8 @@ module.exports = teamArray => {
         </body>
         
         </html>
-`;
-};
+`
+}
 
 
 
