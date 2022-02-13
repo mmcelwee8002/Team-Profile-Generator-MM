@@ -1,64 +1,97 @@
 //Manager card
 
 // const generateManager = function (manager) {
-const generateManager = function (manager) {
+const generateManager = manager => {
 
     return `
-    <div class="w3-container w3-deep-orange w3-center">
+        <div class="w3-container w3-deep-orange w3-center">
         <h2>My Team</h2>
-    </div>
-    <div class="w3-row-padding">
-        <div class="w3-third w3-margin-bottom">
-            <ul class="w3-ul w3-border w3-center w3-hover-shadow">
-                <li class="w3-aqua w3-xlarge w3-padding-32">
-               
-                    <h2>${manager}</h2>
-                    <p>Manager</p>
-                </li>
-                <li class="w3-padding-16"><b>ID</b> ${manager}</li>
-                <li class="w3-padding-16"><b>Email</b> ${manager}</li>
-                <li class="w3-padding-16"><b>Office Number</b> ${manager}</li>
-            </ul>
         </div>
-        `;
+
+        <div class="w3-row-padding">
+
+        <div class="w3-third w3-margin-bottom">
+          
+                <ul class="w3-ul w3-border w3-center w3-hover-shadow">
+                    <li class="w3-aqua w3-xlarge w3-padding-32">
+                        <h2>${manager.name}</h2>
+                        <p>Manager</p>
+                    </li>
+                    <li class="w3-padding-16"><b>ID</b> ${manager.id}</li>
+                    <li class="w3-padding-16"><b>Email</b> ${manager.email}</li>
+                    <li class="w3-padding-16"><b>Office Number</b> ${manager.officeNumber}</li>
+                    </li>
+                </ul>
+        
+        </div>
+        
+                
+`
 }
 
-//Engineer Card
-const generateEngineer = function (engineer) {
+
+
+// Engineer Card
+const generateEngineer = data => {
+    const engineer = data.filter(employee => employee.role == 'Engineer')
+
     return `
-                < div class="w3-third w3-margin-bottom" >
-                    <ul class="w3-ul w3-border w3-center w3-hover-shadow">
-                        <li class="w3-aqua w3-xlarge w3-padding-32">
-                        
-                            <h2>${engineer}</h2>
-                            <p>${engineer}</p>
-                        </li>
-                        <li class="w3-padding-16"><b>ID</b> ${engineer}</li>
-                        <li class="w3-padding-16"><b>Email</b> ${engineer}</li>
-                        <li class="w3-padding-16"><b>Github</b> ${engineer}</li>
-                    </ul>
-                </div >
-    `;
+        <div class="w3-third w3-margin-bottom">
+
+            ${engineer
+
+            .map(({ name, role, id, email, github }) => {
+                return `        
+
+            <ul class="w3-ul w3-border w3-center w3-hover-shadow">
+                <li class="w3-aqua w3-xlarge w3-padding-32">
+
+                    <h2>${name}</h2>
+                    <p>${role}</p>
+                </li>
 
 
+                <li class="w3-padding-16"><b>ID</b> ${id}</li>
+                <li class="w3-padding-16"><b>Email</b> ${email}</li>
+                <li class="w3-padding-16"><b>Github</b> ${github}</li>
+
+                </li>
+            </ul>
+        </div>
+   `
+            })
+
+        }`
 }
 //Intern Card
 
-const generateIntern = function (intern) {
+const generateIntern = data => {
+    const intern = data.filter(employee => employee.role == 'Intern')
+
     return `
-        <div class="w3-third w3-margin-bottom">
+         <div class="w3-third w3-margin-bottom">
+        ${intern
+            .map(({ name, role, id, email, school }) => {
+                return `        
             <ul class="w3-ul w3-border w3-center w3-hover-shadow">
                 <li class="w3-aqua w3-xlarge w3-padding-32">
-                    <h2>${intern}</h2>
-                    <<p>${intern}</p>
+
+                    <h2>${name}</h2>
+                    <p>${role}</p>
                 </li>
-                <li class="w3-padding-16"><b>ID</b> ${intern}</li>
-                <li class="w3-padding-16"><b>Email</b> ${intern}</li>
-                <li class="w3-padding-16"><b>School</b> ${intern}</li>
+
+
+                <li class="w3-padding-16"><b>ID</b> ${id}</li>
+                <li class="w3-padding-16"><b>Email</b> ${email}</li>
+                <li class="w3-padding-16"><b>Github</b> ${school}</li>
+
+                </li>
             </ul>
         </div>
-    </div >
-`;
+            `
+            })
+
+        };`
 }
 
 
@@ -107,33 +140,29 @@ generateHTML = (data) => {
 //final HTML
 
 // const generateTeamPage = function (teamCards){
-module.exports = templateData => {
-
-    const { manager, engineer, intern } = templateData
+module.exports = teamArray => {
 
 
+
+    
     return `
- <!DOCTYPE html >
- <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html>
+<title>Team Org Chart</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<title>Team Org chart</title>
-</head>
+
 <body>
-<div class="w3-row-padding">
-        <div class="w3-third w3-margin-bottom">
-            <ul class="w3-ul w3-border w3-center w3-hover-shadow">
-                <li class="w3-aqua w3-xlarge w3-padding-32">
-        ${generateManager(manager)}
-        ${generateEngineer(engineer)}
-        ${generateIntern(intern)}
-            </ul>
-        </div>
-</body>
-</html>
+    <br>
+
+    ${generateManager(teamArray[0])}
+    
+    ${generateEngineer(teamArray)}
+    ${generateIntern(teamArray)}
+
+        </body>
+        
+        </html>
 `;
 };
 

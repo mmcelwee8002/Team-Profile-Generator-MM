@@ -194,6 +194,7 @@ const addEmployee = teamData => {
 addManager()
     .then(addEmployee)
     .then(teamArray => {
+        console.log('console log from team array index.js', teamArray);
         return generatePage(teamArray);
     })
 
