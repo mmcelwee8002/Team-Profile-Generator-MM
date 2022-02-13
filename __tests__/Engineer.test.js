@@ -9,5 +9,5 @@ test('creates a Engineer object', () => {
     expect(engineer.email).toEqual(expect.any(String));
     expect(engineer.github).toEqual(expect.any(String));
     expect(engineer.role).toEqual(expect.any(String));
-    expect(engineer.officeNumber).toEqual(expect.any(String));
+    
 })
